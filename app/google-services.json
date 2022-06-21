@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "544598956733",
+    "project_id": "flipcard-940ef",
+    "storage_bucket": "flipcard-940ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544598956733:android:69561042d0b1c9fcf0f5d4",
+        "android_client_info": {
+          "package_name": "tw.edu.pu.o10930020.flipcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544598956733-e4ah163oq5d557tkiq6n4m3r1ojghefu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqp0pLIxB9jINMK6X_gwn0OHyUeWBlECE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544598956733-e4ah163oq5d557tkiq6n4m3r1ojghefu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
