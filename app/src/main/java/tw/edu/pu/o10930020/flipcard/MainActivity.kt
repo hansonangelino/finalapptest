@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 import kotlin.random.Random
 
 
@@ -24,11 +25,12 @@ class MainActivity : AppCompatActivity() {
         "born" to 1815
     )
 
+    lateinit var text_player1 : TextView
+    lateinit var text_player2 : TextView
+
     lateinit var iv_card1: ImageView
     lateinit var iv_card2: ImageView
 
-    lateinit var tv_player1: TextView
-    lateinit var tv_player2: TextView
     lateinit var round_text: TextView
 
     lateinit var tv_war: TextView
@@ -71,8 +73,12 @@ class MainActivity : AppCompatActivity() {
         iv_card1.setImageResource(R.drawable.back)
         iv_card2.setImageResource(R.drawable.back)
 
-        tv_player1 = findViewById(R.id.tv_player1)
-        tv_player2 = findViewById(R.id.tv_player2)
+        text_player1 = findViewById(R.id.tv_player1)
+        text_player2 = findViewById(R.id.tv_player2)
+
+        val player1_name = intent.getStringExtra("player1")
+        val player2_name = intent.getStringExtra("player2")
+
         round_text = findViewById(R.id.round_text)
 
         tv_war = findViewById(R.id.tv_war)
@@ -100,15 +106,15 @@ class MainActivity : AppCompatActivity() {
                 tv_war.visibility = View.VISIBLE
 
                 if (player1 > player2){
-                    tv_war.text = "WINNER :    Player 1"
+                    tv_war.text = "WINNER : " + player1_name
                     //Upload to database
 
                     user = hashMapOf(
-                        "WINNER" to tv_player1.text.toString(),
+                        "WINNER" to text_player1.text.toString(),
                     )
                     db.collection("winner")
                         //.add(user)
-                        .document(tv_player1.text.toString())
+                        .document(text_player1.text.toString())
                         .set(user)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Game saved",
@@ -120,15 +126,15 @@ class MainActivity : AppCompatActivity() {
                         }
 
                 } else if(player2 > player1){
-                    tv_war.text = "WINNER :    Player 2"
+                    tv_war.text = "WINNER : " + player2_name
                     //Upload to database
 
                     user = hashMapOf(
-                        "WINNER" to tv_player2.text.toString(),
+                        "WINNER" to text_player2.text.toString(),
                     )
                     db.collection("winner")
                         //.add(user)
-                        .document(tv_player2.text.toString())
+                        .document(text_player2.text.toString())
                         .set(user)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Game saved",
@@ -148,16 +154,16 @@ class MainActivity : AppCompatActivity() {
             //Compare war label
             if (card1 > card2){
                 player1++
-                tv_player1.text = "Player 1: $player1"
+                text_player1.text = player1_name + " : $player1"
 
             } else if(card1 < card2){
                 player2++
-                tv_player2.text = "Player 2: $player2"
+                text_player2.text = player2_name + " : $player2"
             } else {
                 player1++
                 player2++
-                tv_player1.text = "Player 1: $player1"
-                tv_player2.text = "Player 2: $player2"
+                text_player1.text = player1_name + " : $player1"
+                text_player2.text = player2_name + " : $player2"
                 tv_war.visibility = View.VISIBLE
             }
 
@@ -165,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 db.collection("winner")
                     //.whereEqualTo("名字", binding.edtName.text.toString())
                     //.orderBy("WINNNER")
-                    .whereLessThan("WINNER",tv_player2.text.toString())
+                    .whereLessThan("WINNER",text_player2.text.toString())
                     .limit(3)
 
                     .get()
